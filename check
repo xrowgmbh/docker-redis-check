@@ -1,1 +1,14 @@
+#!/bin/bash
+set -eu
 
+while [ -z "$(redis-cli -h $REDIS_HOST CLUSTER INFO | awk '/cluster_state:ok/')" ]
+do
+  echo "not fail"
+  sleep 5
+done
+
+while [ -z "$(redis-cli -h $REDIS_HOST CLUSTER INFO | awk '/cluster_state:ok/')" ]
+do
+  echo "execute"
+  sleep 5
+done
