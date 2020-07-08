@@ -8,7 +8,7 @@ ENV REDIS_HOST="localhost"
 
 FROM centos:latest 
 WORKDIR /root/
-COPY --from=0 /data/redis-cli /usr/bin/redis-cli
+COPY --from=0 /usr/local/bin/redis-cli /usr/bin/redis-cli
 COPY --from=1 /usr/bin/oc /usr/bin/oc
 RUN chmod +x /usr/bin/redis-cli
 RUN chmod +x /usr/bin/oc
