@@ -4,8 +4,10 @@ set -eu
 echo "Waitng 10m for checks"
 sleep 600
 
-while [ -z "$(redis-cli -h $REDIS_HOST CLUSTER INFO | awk '/cluster_state:ok/')" ]
+while [ -z "$(redis-cli -h $REDIS_HOST CLUSTER INFO | awk '/cluster_state:fail/')" ]
 do
-  echo "execute"
-  sleep 5
+  echo "Execute job $JOB_NAME"
+  oc get --export -o yaml -n $POD_NAMESPACE job/$JOB_NAME | oc apply -f -
+  sleep 60
+  echo "Retry"
 done
