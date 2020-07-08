@@ -6,7 +6,7 @@ sleep 600
 echo "Starting checks"
 while [ true ]
 do
-  if [ -z "$(redis-cli -h $REDIS_HOST CLUSTER INFO | awk '/cluster_state:ok/')" ]; then;
+  if [ -z "$(redis-cli -h $REDIS_HOST CLUSTER INFO | awk '/cluster_state:ok/')" ]; then
     echo "Execute job $JOB_NAME"
     oc get --export -o yaml -n $POD_NAMESPACE job/$JOB_NAME | oc apply -f -
     sleep 60
