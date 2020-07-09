@@ -13,7 +13,7 @@ do
     sed -i '/controller-uid/d' job.yaml
     oc delete -n $POD_NAMESPACE job/$JOB_NAME
     oc apply -f job.yaml
-    sleep 60
+    sleep 30
   fi;
   sleep 5
 done
