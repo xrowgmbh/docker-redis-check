@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 
-echo "Waitng 10m for checks"
+echo "Waiting 10m for checks to start"
 sleep 600
 echo "Starting checks"
 while [ true ]
