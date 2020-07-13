@@ -9,6 +9,7 @@ do
   if [ -z "$(redis-cli -h $REDIS_HOST CLUSTER INFO | awk '/cluster_state:ok/')" ]; then
     echo "Execute job $JOB_NAME"
     SERVICE=$(oc get service --no-headers=true | grep -i "sessionservice[^-]" |sed -r 's/(\S+)\s+(\S+).*/echo \1/e')
+    oc get pods --no-headers=true | grep -i "sessionservice-[[:digit:]]" |sed -r 's/(\S+)\s+(\S+).*/redis-cli -h \1.'"$SERVICE"' FLUSHALL/e'
     oc get pods --no-headers=true | grep -i "sessionservice-[[:digit:]]" |sed -r 's/(\S+)\s+(\S+).*/redis-cli -h \1.'"$SERVICE"' CLUSTER RESET HARD/e'
     oc get --export -o yaml -n $POD_NAMESPACE job/$JOB_NAME > job.yaml
     sed -i '/controller-uid/d' job.yaml
